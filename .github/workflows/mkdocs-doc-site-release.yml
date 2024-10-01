@@ -1,9 +1,11 @@
 name: MkDocs Documentation Site Release Process
+
 on:
-  push:
-    branches: [ $default-branch ]
+  workflow_call:
+
 permissions:
   contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
