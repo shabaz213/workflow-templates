@@ -7,13 +7,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout code with submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
+
       - uses: actions/cache@v2
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy -f plugin-doc-site-conf/mkdocs.yml --force
+
+      - name: Install Mkdocs and Material Theme
+        run: pip install mkdocs-material
+
+      - name: Deploy documentation site
+        run: mkdocs gh-deploy -f plugin-doc-site-conf/mkdocs.yml --force
